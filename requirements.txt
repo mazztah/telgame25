@@ -1,0 +1,5 @@
+Flask==2.2.3
+aiogram==3.0.0b8
+python-dotenv==1.0.0
+gunicorn==20.1.0
+werkzeug==2.2.3
