@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Balance Tower</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            height: 100vh;
+            background-color: #87CEEB;
+        }
+        .game-container {
+            position: relative;
+            width: 300px;
+            height: 500px;
+            background: #f0f0f0;
+            border: 2px solid #000;
+            overflow: hidden;
+        }
+        .block {
+            position: absolute;
+            width: 60px;
+            height: 20px;
+            background: #8B0000;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container" id="gameContainer"></div>
+    <script>
+        let gameContainer = document.getElementById("gameContainer");
+        let baseX = 120;
+        let baseY = 480;
+        let tilt = 0;
+
+        window.addEventListener("deviceorientation", (event) => {
+            tilt = event.gamma / 2; 
+        });
+
+        function addBlock() {
+            let block = document.createElement("div");
+            block.classList.add("block");
+            block.style.bottom = `${baseY}px`;
+            block.style.left = `${baseX}px`;
+            gameContainer.appendChild(block);
+            baseY -= 22;
+        }
+
+        setInterval(() => {
+            let blocks = document.querySelectorAll(".block");
+            blocks.forEach(block => {
+                let currentX = parseFloat(block.style.left);
+                block.style.left = `${currentX + tilt}px`;
+            });
+        }, 50);
+
+        gameContainer.addEventListener("click", addBlock);
+    </script>
+</body>
+</html>
